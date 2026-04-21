@@ -25,3 +25,20 @@ This repository starts from base images of blank Ubuntu, and sets up everything 
 - The bootstrap logic then downloads and installs only the required packages and scripts from the network.
 - This avoids delivering the full multi-gig VM image over a slow network, while still using the network for package installation.
 - The repo remains the single source for bootstrap logic, lecture/use-case profiles, and reproducible install steps.
+
+## Implementation status
+
+The repository now contains the first bootstrap implementation:
+
+- `bootstrap.sh` — main launcher and profile selector
+- `common.sh` — shared helper functions and network checks
+- `profiles/` — example lecture and developer setup profiles
+- `docs/how-to-build-vm.md` — instructions for preparing the USB-delivered VM image
+
+## How to use
+
+1. Copy the repository into the student VM.
+2. Install `zenity` on the Ubuntu desktop image.
+3. Make `bootstrap.sh` and profile scripts executable.
+4. Create an autostart desktop entry for the student user to launch `bootstrap.sh` on login.
+5. Boot the VM, log in, and select a profile from the popup.

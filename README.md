@@ -7,7 +7,7 @@ It contains the bootstrap launcher, profile scripts, and setup automation for a 
 
 - A minimal Ubuntu desktop installation
 - A standard non-root user account for students, named `student`
-- `zenity` installed so the profile selector can run with a GUI
+- Network access for initial repository fetch
 - `sudo` configured for the standard user
 
 ## Quick start

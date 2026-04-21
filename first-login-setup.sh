@@ -18,13 +18,16 @@ BOOTSTRAP_STATE="${HOME}/.ubuntu-bootstrap-state"
 SETUP_STATE="${HOME}/.first-login-setup-state"
 EXEC_PATH="${DEST_DIR}/bootstrap.sh"
 CURRENT_SCRIPT="$(readlink -f "$0")"
+LOG_FILE="${HOME}/.first-login-setup.log"
 
 log() {
   printf "[first-login-setup] %s\n" "$1"
+  printf '[%s] %s\n' "$(date -Iseconds)" "$1" >> "$LOG_FILE"
 }
 
 error() {
   printf "[first-login-setup] ERROR: %s\n" "$1" >&2
+  log "ERROR: $1"
   exit 1
 }
 
@@ -71,12 +74,17 @@ EOF
     case "$choice" in
       1) echo "Run bootstrap now" ;;
       2) echo "Don't show again" ;;
-      *) echo "Run bootstrap now" ;;
+      *) echo "" ;;
     esac
   fi
 }
 
 ensure_packages() {
+  if command_exists git && command_exists zenity; then
+    log "Required packages already installed."
+    return
+  fi
+
   log "Installing required packages..."
   sudo apt-get update -qq
   sudo apt-get install -y git zenity
@@ -115,22 +123,23 @@ if [[ "${USER:-}" == "root" ]]; then
   error "Run this script as the student user, not as root."
 fi
 
+log "first-login-setup started"
+
 if state_dismissed || state_profile_installed; then
   remove_autostart
   exit 0
 fi
 
 create_autostart
-ensure_packages
-
-log "Preparing bootstrap repo..."
-install_bootstrap_repo
-make_bootstrap_executable
 
 action="$(prompt_action)"
 
 case "$action" in
   "Run bootstrap now")
+    ensure_packages
+    log "Preparing bootstrap repo..."
+    install_bootstrap_repo
+    make_bootstrap_executable
     create_bootstrap_autostart
     log "Launching bootstrap launcher..."
     bash "$EXEC_PATH"
@@ -147,5 +156,6 @@ case "$action" in
     ;;
   *)
     log "No valid action chosen. This setup will run again on next login."
+    exit 0
     ;;
  esac

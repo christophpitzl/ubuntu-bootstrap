@@ -38,3 +38,5 @@ If you prefer to set up the VM manually:
 - `profiles/` — example lecture and developer setup profiles
 - `docs/how-to-build-vm.md` — VM preparation instructions
 - `install-vm.sh` — automated VM setup script
+
+> Note: detailed lecture installation scripts are not kept in this bootstrap repo. Lecture repositories should publish their own `scripts/setup.sh` and the bootstrap profiles can link to those external scripts.

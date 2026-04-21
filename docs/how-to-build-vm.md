@@ -39,3 +39,4 @@ If you prefer to prepare the VM manually, use the same repository and autostart 
 - The student VM image is delivered locally via USB/disk.
 - The bootstrap system uses the network only for package installation and script downloads.
 - Add new profiles by creating files in `profiles/` with `PROFILE_NAME` and `profile_install()`.
+- Detailed installation scripts for each lecture should live in the lecture repositories, for example as `scripts/setup.sh`, rather than in this bootstrap repo.

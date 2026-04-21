@@ -1,44 +1,40 @@
-# Ubuntu Webots Bootstrap
+# Ubuntu Bootstrap
 
-I give lectures using Ubuntu.
+This repository prepares a USB-delivered Ubuntu VM for lectures and development use.
+It contains the bootstrap launcher, profile scripts, and setup automation for a standard student account.
 
-This repository starts from base images of blank Ubuntu, and sets up everything else using shell scripts and git repositories.
+## Quick start
 
-## Purpose
+1. Copy the repository into the student VM.
+2. Run the setup script from the standard student account:
 
-- Use minimal Ubuntu base images
-- Install and configure tools via automation
-- Keep the environment reproducible with shell scripts and git sources
+```bash
+bash ~/install-vm.sh
+```
 
-## Workflow
+3. Reboot or log out and log back in.
+4. The bootstrap launcher will start automatically and prompt for a profile.
 
-1. Start from a blank Ubuntu image
-2. Run setup/install shell scripts
-3. Pull required code from git repositories
-4. Use the resulting system for lectures
+## What the installer does
 
-## Design concept
+- installs `zenity` and `git`
+- clones the repository into `~/ubuntu-bootstrap` if needed
+- makes `bootstrap.sh` and `profiles/*.sh` executable
+- creates the autostart entry at `~/.config/autostart/ubuntu-bootstrap.desktop`
 
-- Distribute the initial VM image via USB/disk, so students boot a prepared Ubuntu VM locally.
-- Students log in with a standard non-root account.
-- On first login, a launcher pops up and asks the student to select the lecture or use case.
-- The bootstrap logic then downloads and installs only the required packages and scripts from the network.
-- This avoids delivering the full multi-gig VM image over a slow network, while still using the network for package installation.
-- The repo remains the single source for bootstrap logic, lecture/use-case profiles, and reproducible install steps.
+## Manual setup alternative
 
-## Implementation status
+If you prefer to set up the VM manually:
 
-The repository now contains the first bootstrap implementation:
+- install `zenity`
+- clone the repo into `~/ubuntu-bootstrap`
+- run `chmod +x bootstrap.sh profiles/*.sh`
+- save an autostart desktop entry to `~/.config/autostart/ubuntu-bootstrap.desktop`
+
+## Repo contents
 
 - `bootstrap.sh` — main launcher and profile selector
 - `common.sh` — shared helper functions and network checks
 - `profiles/` — example lecture and developer setup profiles
-- `docs/how-to-build-vm.md` — instructions for preparing the USB-delivered VM image
-
-## How to use
-
-1. Copy the repository into the student VM.
-2. Install `zenity` on the Ubuntu desktop image.
-3. Make `bootstrap.sh` and profile scripts executable.
-4. Create an autostart desktop entry for the student user to launch `bootstrap.sh` on login.
-5. Boot the VM, log in, and select a profile from the popup.
+- `docs/how-to-build-vm.md` — VM preparation instructions
+- `install-vm.sh` — automated VM setup script

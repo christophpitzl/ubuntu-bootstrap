@@ -22,6 +22,14 @@ load_profiles() {
   fi
 }
 
+zenity_usable() {
+  command -v zenity >/dev/null 2>&1 || return 1
+  if [ -n "${DISPLAY:-}" ] || [ -n "${WAYLAND_DISPLAY:-}" ] || [ -n "${XDG_SESSION_TYPE:-}" ]; then
+    return 0
+  fi
+  return 1
+}
+
 get_profile_metadata() {
   local file="$1"
   PROFILE_NAME="$(grep -m1 '^PROFILE_NAME=' "$file" | cut -d= -f2- | tr -d '"' || true)"
@@ -39,18 +47,26 @@ show_profile_selector() {
     fi
   fi
 
-  if command -v zenity >/dev/null 2>&1; then
+  if zenity_usable; then
     local choices=()
     for profile_file in "${AVAILABLE_PROFILES[@]}"; do
       get_profile_metadata "$profile_file"
       choices+=(FALSE "$PROFILE_NAME")
     done
-    SELECTED_PROFILE="$(zenity --list --title="Ubuntu Bootstrap" --text="$dialog_text" --radiolist --column="" --column="Profile" "${choices[@]}")" || true
-    if [ -z "$SELECTED_PROFILE" ]; then
+    local zenity_err="$HOME/.ubuntu-bootstrap-zenity.err"
+    SELECTED_PROFILE="$(zenity --list --title="Ubuntu Bootstrap" --text="$dialog_text" --radiolist --column="" --column="Profile" "${choices[@]}" 2>"$zenity_err")" || true
+    if [ -n "$SELECTED_PROFILE" ]; then
+      rm -f "$zenity_err"
+    elif [ -s "$zenity_err" ]; then
+      log "Zenity failed, falling back to console mode"
+      rm -f "$zenity_err"
+    else
       log "Profile selection cancelled"
       exit 0
     fi
-  else
+  fi
+
+  if [ -z "$SELECTED_PROFILE" ]; then
     echo -e "$dialog_text"
     local idx=1
     for profile_file in "${AVAILABLE_PROFILES[@]}"; do

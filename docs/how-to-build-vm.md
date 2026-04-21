@@ -12,39 +12,20 @@ This repository provides the bootstrap logic that runs inside the student VM. Th
 
 ## Installation steps inside the VM
 
-1. Install the required GUI dialog package:
+Copy `install-vm.sh` into the student VM and run it from the standard student account:
 
 ```bash
-sudo apt-get update
-sudo apt-get install -y zenity
+bash ~/install-vm.sh
 ```
 
-2. Clone or copy the repository into the student home directory:
+The script performs the following setup:
 
-```bash
-cd /home/student
-git clone https://github.com/<your-org>/ubuntu-bootstrap.git
-```
+- installs `zenity` and `git`
+- clones the repository into `~/ubuntu-bootstrap` if needed
+- makes `bootstrap.sh` and `profiles/*.sh` executable
+- creates the autostart entry at `~/.config/autostart/ubuntu-bootstrap.desktop`
 
-3. Make the bootstrap files executable:
-
-```bash
-cd /home/student/ubuntu-bootstrap
-chmod +x bootstrap.sh profiles/*.sh
-```
-
-4. Add an autostart entry for the student account:
-
-```ini
-[Desktop Entry]
-Type=Application
-Name=Ubuntu Bootstrap
-Exec=/home/student/ubuntu-bootstrap/bootstrap.sh
-Terminal=false
-X-GNOME-Autostart-enabled=true
-```
-
-Save this file as `/home/student/.config/autostart/ubuntu-bootstrap.desktop`.
+If you prefer to prepare the VM manually, use the same repository and autostart conventions described above.
 
 ## Student flow
 

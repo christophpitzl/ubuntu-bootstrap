@@ -6,7 +6,7 @@ It contains the bootstrap launcher, profile scripts, and setup automation for a 
 ## Recommended VM contents
 
 - A minimal Ubuntu desktop installation
-- A standard non-root user account for students
+- A standard non-root user account for students, named `student`
 - `zenity` installed so the profile selector can run with a GUI
 - `sudo` configured for the standard user
 

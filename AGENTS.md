@@ -35,3 +35,4 @@ This file contains repository-level notes for automation agents, maintainers, an
 
 - Prefer the automated setup script over manual VM configuration whenever possible.
 - Keep documentation in `README.md` user-focused and `AGENTS.md` agent/implementation-focused.
+- Use clear git commit conventions such as `docs:`, `fix:`, `feat:`, and `chore:` for commit messages.

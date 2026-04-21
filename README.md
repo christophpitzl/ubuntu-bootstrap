@@ -5,10 +5,15 @@ It contains the bootstrap launcher, profile scripts, and setup automation for a 
 
 ## Quick start
 
-1. Copy `first-login-setup.sh` into the student VM.
-2. Add it to the student user's autostart configuration.
-3. Log in as the student user.
-4. The setup helper will fetch the bootstrap repo, install required tools, and configure the bootstrap launcher.
+1. Copy `first-login-setup.sh` into the student VM home directory.
+2. Run it once from the student user's account:
+
+```bash
+~/first-login-setup.sh
+```
+
+3. Log out and log back in.
+4. The setup helper will install itself into autostart, fetch the bootstrap repo, install required tools, and configure the bootstrap launcher.
 
 ## First-login auto-fetch installer
 

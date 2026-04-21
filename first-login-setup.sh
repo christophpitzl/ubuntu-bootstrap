@@ -2,9 +2,10 @@
 set -euo pipefail
 
 # first-login-setup.sh
-# Copy this file into the student VM and add it to the user's autostart.
-# On login it will fetch the bootstrap repository, install required tools,
-# make the bootstrap files executable, and configure the bootstrap launcher.
+# Copy this file into the student VM and run it once from the student home folder.
+# It will add itself to the user's autostart, fetch the bootstrap repository,
+# install required tools, make bootstrap files executable, and configure the
+# bootstrap launcher.
 # The script will reappear after reboot until the student dismisses it or
 # installs a bootstrap profile.
 

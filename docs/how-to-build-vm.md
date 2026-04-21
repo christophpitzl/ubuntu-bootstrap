@@ -12,9 +12,25 @@ This repository provides the bootstrap logic that runs inside the student VM. Th
 
 ## Installation steps inside the VM
 
-Copy `first-login-setup.sh` into the student VM and add it to the student user's autostart configuration.
+1. Copy the script into the student home directory `/home/student`
 
-This helper will automatically fetch and install the bootstrap repo on login, and will stay active across reboots until the student either dismisses it or installs a profile.
+2. Make it executable:
+
+```bash
+chmod +x /home/student/first-login-setup.sh
+```
+
+3. Run it once:
+
+```bash
+/home/student/first-login-setup.sh
+```
+
+The script will create its own autostart entry in `~/.config/autostart/first-login-setup.desktop`.
+
+4. Log out and log back in.
+
+On next login, the helper will run and install the bootstrap repo.
 
 The script performs the following setup:
 

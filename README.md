@@ -12,47 +12,23 @@ It contains the bootstrap launcher, profile scripts, and setup automation for a 
 
 ## Quick start
 
-1. Copy `first-login-setup.sh` into the student VM home directory:
+1. Copy `first-login-setup.sh` into the student VM home directory `/home/student`.
 
-```bash
-cp /path/to/first-login-setup.sh /home/student/first-login-setup.sh
-chmod +x /home/student/first-login-setup.sh
-```
-
-2. Run it once from the student user's account:
-
-```bash
-/home/student/first-login-setup.sh
-```
-
-3. Log out and log back in.
-4. The setup helper will install itself into autostart, fetch the bootstrap repo, install required tools, and configure the bootstrap launcher.
-
-## First-login auto-fetch installer
-
-The VM fetches the bootstrap repo automatically on login using `first-login-setup.sh`.
-It will reappear after reboot until the student either dismisses it or installs one of the bootstrap profiles.
-
-## Installation steps inside the VM
-
-1. Copy `first-login-setup.sh` into `/home/student`.
 2. Make it executable:
 
 ```bash
 chmod +x /home/student/first-login-setup.sh
 ```
 
-3. Run it once:
+3. Run it once from the student user's account:
 
 ```bash
 /home/student/first-login-setup.sh
 ```
 
-The script will create its own autostart entry in `~/.config/autostart/first-login-setup.desktop`.
-
 4. Log out and log back in.
 
-On next login, the helper will run and install the bootstrap repo.
+The setup helper will install itself into autostart, fetch the bootstrap repo, install required tools, and configure the bootstrap launcher. It will reappear after reboot until the student either dismisses it or installs one of the bootstrap profiles.
 
 ## What the installer does
 

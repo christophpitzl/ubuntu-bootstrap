@@ -4,35 +4,36 @@ This file contains repository-level notes for automation agents, maintainers, an
 
 ## Purpose
 
-- Use minimal Ubuntu base images for student VMs.
+- Use minimal Ubuntu desktop base images for student VMs.
 - Install required tools and packages through scripted automation.
-- Keep the VM bootstrap process reproducible with shell scripts and git sources.
+- Keep the VM bootstrap process reproducible with shell scripts and GitHub-hosted lecture install scripts.
 
 ## Workflow
 
 1. Start from a blank Ubuntu desktop image.
-2. Copy the repository into the student VM.
-3. Run `bash ~/install-vm.sh` from the standard student account.
-4. Reboot or relogin so the bootstrap launcher starts automatically.
-5. Select the lecture/use-case profile and let the installer fetch packages from the network.
+2. Copy `first-login-setup.sh` into `/home/student`.
+3. Run `/home/student/first-login-setup.sh` once from the standard student account.
+4. Log out and log back in.
+5. On login, the helper installs itself into autostart, pulls the bootstrap repo, and launches the profile selector.
+6. The selected lecture profile installs required packages from the network.
 
 ## Design concept
 
 - Deliver the initial VM image locally via USB/disk so students boot a prepared Ubuntu VM.
 - Use a standard non-root student account for safety and consistency.
-- Launch the bootstrap logic on login to keep the VM image minimal and install only needed components.
-- The repository is the single source of truth for bootstrap logic, profiles, and setup steps.
+- Keep the bootstrap repo generic and let lecture repos publish their own `scripts/setup.sh` via GitHub Pages.
+- Use first-login automation to avoid manual setup steps and keep the VM ready across reboots.
 
 ## Implementation status
 
 - `bootstrap.sh` — main launcher and profile selector.
 - `common.sh` — shared helper functions and network checks.
-- `profiles/` — example lecture and developer setup profiles.
-- `docs/how-to-build-vm.md` — VM preparation instructions.
-- `install-vm.sh` — automated setup script for the student VM.
+- `profiles/` — lecture profile wrappers that fetch published `scripts/setup.sh` from lecture repos.
+- `first-login-setup.sh` — first-login auto-fetch setup helper.
+- `README.md` — consolidated user-facing setup and install instructions.
 
 ## Notes for agents
 
-- Prefer the automated setup script over manual VM configuration whenever possible.
+- Prefer the first-login auto-fetch workflow over manual VM configuration whenever possible.
 - Keep documentation in `README.md` user-focused and `AGENTS.md` agent/implementation-focused.
 - Use clear git commit conventions such as `docs:`, `fix:`, `feat:`, and `chore:` for commit messages.

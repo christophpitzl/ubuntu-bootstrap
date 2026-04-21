@@ -12,11 +12,9 @@ This repository provides the bootstrap logic that runs inside the student VM. Th
 
 ## Installation steps inside the VM
 
-Copy `install-vm.sh` into the student VM and run it from the standard student account:
+Copy `first-login-setup.sh` into the student VM and add it to the student user's autostart configuration.
 
-```bash
-bash ~/install-vm.sh
-```
+This helper will automatically fetch and install the bootstrap repo on login, and will stay active across reboots until the student either dismisses it or installs a profile.
 
 The script performs the following setup:
 

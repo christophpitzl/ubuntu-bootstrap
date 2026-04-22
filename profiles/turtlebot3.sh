@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-PROFILE_NAME="Lecture: TurtleBot3"
-PROFILE_DESCRIPTION="Run the TurtleBot3 lecture repo's setup script."
+PROFILE_NAME="Lecture: ROS (TurtleBot3)"
+PROFILE_DESCRIPTION="Run the ROS (TurtleBot3) lecture repo's setup script."
 
 profile_install() {
   log "Installing profile: $PROFILE_NAME"
@@ -9,7 +9,7 @@ profile_install() {
   require_command mktemp
 
   local script_url
-  script_url="${LECTURE_SETUP_URL:-https://<your-org>.github.io/turtlebot3-lecture/scripts/setup.sh}"
+  script_url="${LECTURE_SETUP_URL:-https://christophpitzl.github.io/scripts/setup-ros.sh}"
 
   local tmp_script
   tmp_script="$(mktemp)"
@@ -20,7 +20,7 @@ profile_install() {
 
   chmod +x "$tmp_script"
   run_as_root bash "$tmp_script"
-
-  log "TurtleBot3 lecture setup script executed"
+  
+  log "ROS (TurtleBot3) lecture setup script executed"
   echo "Executed lecture setup script from $script_url"
 }

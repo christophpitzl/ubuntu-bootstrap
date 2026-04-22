@@ -80,14 +80,14 @@ EOF
 }
 
 ensure_packages() {
-  if command_exists git && command_exists zenity; then
+  if command_exists git && command_exists zenity && command_exists curl; then
     log "Required packages already installed."
     return
   fi
 
   log "Installing required packages..."
   sudo apt-get update -qq
-  sudo apt-get install -y git zenity
+  sudo apt-get install -y git zenity curl
 }
 
 install_bootstrap_repo() {

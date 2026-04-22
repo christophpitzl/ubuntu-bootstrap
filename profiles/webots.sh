@@ -9,7 +9,7 @@ profile_install() {
   require_command mktemp
 
   local script_url
-  script_url="${LECTURE_SETUP_URL:-https://christophpitzl.github.io/scripts/setup-webots.sh}"
+  script_url="${LECTURE_SETUP_URL:-https://christophpitzl.github.io/lecture-auto/scripts/setup-webots.sh}"
 
   local tmp_script
   tmp_script="$(mktemp)"

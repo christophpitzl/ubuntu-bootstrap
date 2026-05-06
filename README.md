@@ -37,6 +37,11 @@ The setup helper will install itself into autostart, fetch the bootstrap repo, i
 - makes `bootstrap.sh` and `profiles/*.sh` executable
 - creates the autostart entry at `~/.config/autostart/ubuntu-bootstrap.desktop`
 
+## Bootstrap startup behavior
+
+- when `bootstrap.sh` runs, it attempts to synchronize the VM clock via NTP before profile selection
+- this helps recover from VMware snapshot time drift and ensures package installs use the correct system time
+
 ## Student flow
 
 1. Boot the VM from USB/disk

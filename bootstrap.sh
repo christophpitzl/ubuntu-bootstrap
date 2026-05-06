@@ -95,6 +95,35 @@ find_profile_file() {
   done
 }
 
+sync_system_time() {
+  if ! network_available; then
+    log "Skipping NTP sync: network unavailable"
+    return
+  fi
+
+  if command -v timedatectl >/dev/null 2>&1; then
+    log "Enabling system NTP time synchronization"
+    run_as_root timedatectl set-ntp true
+    for i in 1 2 3; do
+      if [ "$(timedatectl show -p NTPSynchronized --value 2>/dev/null || true)" = "yes" ]; then
+        log "System clock synchronized"
+        return
+      fi
+      sleep 2
+    done
+    log "NTP sync requested; clock synchronization is pending"
+    return
+  fi
+
+  if command -v ntpdate >/dev/null 2>&1; then
+    log "Syncing system time with ntpdate"
+    run_as_root ntpdate -u pool.ntp.org
+    return
+  fi
+
+  log "No NTP utility found; time sync skipped"
+}
+
 execute_profile() {
   local profile_file="$1"
   log "Executing profile $profile_file"
@@ -114,6 +143,7 @@ execute_profile() {
 }
 
 load_profiles
+sync_system_time
 show_profile_selector
 PROFILE_FILE="$(find_profile_file "$SELECTED_PROFILE")"
 if [ -z "$PROFILE_FILE" ]; then

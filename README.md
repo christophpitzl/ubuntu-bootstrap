@@ -40,7 +40,7 @@ The setup helper will install itself into autostart, fetch the bootstrap repo, i
 ## Bootstrap startup behavior
 
 - when `bootstrap.sh` runs, it attempts to synchronize the VM clock via NTP before profile selection
-- this helps recover from VMware snapshot time drift and ensures package installs use the correct system time
+- this helps recover from virtual machine snapshot time drift and ensures package installs use the correct system time
 
 ## Student flow
 

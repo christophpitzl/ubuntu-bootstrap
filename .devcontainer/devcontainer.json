@@ -1,5 +1,5 @@
 {
-  "name": "ubuntu-bootstrap Codespace",
+  "name": "ubuntu-bootstrap",
   "build": {
     "dockerfile": "Dockerfile"
   },
@@ -14,7 +14,8 @@
         "files.exclude": {
           "**/.devcontainer": false
         },
-        "terminal.integrated.defaultProfile.linux": "bash"
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "github.copilot.chat.agent.backgroundTodoAgent.enabled": true
       }
     }
   },
